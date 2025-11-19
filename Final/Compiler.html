@@ -98,7 +98,7 @@
             background: #fff;
         }
 
-        /* 🔥 RESULT AREA SMALL LIKE SEARCH BAR */
+        /* RESULT AREA SMALL LIKE SEARCH BAR */
         #resultArea {
             background: #f8f9fa;
             min-height: 45px;
@@ -142,26 +142,26 @@
 
         <div class="layout-wrapper">
             
-            <!-- ✅ LEFT SIDE BUTTONS -->
+            <!-- LEFT SIDE BUTTONS -->
             <div class="button-group">
                 <input type="file" id="fileInput" class="file-input" accept=".txt,.java">
-                <button id="openFileBtn">📁 Open File</button>
+                <button id="openFileBtn">Open File</button>
                 <button id="lexicalBtn" disabled> Lexical Analysis</button>
                 <button id="syntaxBtn" disabled> Syntax Analysis</button>
                 <button id="semanticBtn" disabled> Semantic Analysis</button>
                 <button id="clearBtn" disabled> Clear</button>
             </div>
 
-            <!-- ✅ RIGHT SIDE (RESULT ON TOP, CODE BELOW) -->
+            <!-- RIGHT SIDE (RESULT ON TOP, CODE BELOW) -->
             <div style="flex: 1;">
 
-                <!-- 🔼 RESULT AREA FIRST -->
+                <!-- RESULT AREA FIRST -->
                 <div class="panel">
                     <h2>Result Text Area</h2>
                     <textarea id="resultArea" readonly placeholder="Analysis results will appear here..."></textarea>
                 </div>
 
-                <!-- 🔽 CODE AREA SECOND -->
+                <!-- CODE AREA SECOND -->
                 <div class="panel">
                     <h2>Code Text Area</h2>
                     <textarea id="codeArea" placeholder="Open a file or paste your Java variable declarations here..." readonly></textarea>
@@ -201,7 +201,7 @@
                     codeArea.value = event.target.result;
                     appState.fileLoaded = true;
                     updateButtonStates();
-                    resultArea.value = '✅ File loaded successfully!\n\nClick "Lexical Analysis" to begin.';
+                    resultArea.value = 'File loaded successfully!\n\nClick "Lexical Analysis" to begin.';
                 };
                 reader.readAsText(file);
             }
@@ -212,11 +212,11 @@
         function performLexicalAnalysis() {
             const code = codeArea.value.trim();
             if (!code) {
-                resultArea.value = '❌ ERROR: No code to analyze!';
+                resultArea.value = 'ERROR: No code to analyze!';
                 return;
             }
 
-            resultArea.value = '🔍 Performing Lexical Analysis...\n\n';
+            resultArea.value = 'Performing Lexical Analysis...\n\n';
             
             const lines = code.split('\n');
             let tokens = [];
@@ -255,10 +255,10 @@
             });
 
             if (errors.length) {
-                resultArea.value += '❌ LEXICAL ANALYSIS FAILED!\n\n' + errors.join("\n");
+                resultArea.value += ' LEXICAL ANALYSIS FAILED!\n\n' + errors.join("\n");
                 appState.lexicalPassed = false;
             } else {
-                resultArea.value += '✅ LEXICAL ANALYSIS PASSED!';
+                resultArea.value += ' LEXICAL ANALYSIS PASSED!';
                 appState.lexicalPassed = true;
                 appState.tokens = tokens;
             }
@@ -269,7 +269,7 @@
         syntaxBtn.addEventListener('click', () => performSyntaxAnalysis());
 
         function performSyntaxAnalysis() {
-            resultArea.value = '📋 Performing Syntax Analysis...\n\n';
+            resultArea.value = 'Performing Syntax Analysis...\n\n';
             
             const code = codeArea.value.trim();
             const lines = code.split('\n').filter(l => l.trim());
@@ -291,10 +291,10 @@
             });
 
             if (errors.length) {
-                resultArea.value += '❌ SYNTAX FAILED!\n\n' + errors.join("\n");
+                resultArea.value += 'SYNTAX FAILED!\n\n' + errors.join("\n");
                 appState.syntaxPassed = false;
             } else {
-                resultArea.value += '✅ SYNTAX PASSED!';
+                resultArea.value += 'SYNTAX PASSED!';
                 appState.syntaxPassed = true;
             }
 
@@ -304,7 +304,7 @@
         semanticBtn.addEventListener('click', () => performSemanticAnalysis());
 
         function performSemanticAnalysis() {
-            resultArea.value = '🔍 Performing Semantic Analysis...\n\n';
+            resultArea.value = 'Performing Semantic Analysis...\n\n';
             
             const code = codeArea.value.trim();
             const lines = code.split('\n').filter(l => l.trim());
@@ -346,10 +346,10 @@
             });
 
             if (errors.length) {
-                resultArea.value += '❌ SEMANTIC FAILED!\n\n' + errors.join("\n");
+                resultArea.value += 'SEMANTIC FAILED!\n\n' + errors.join("\n");
                 appState.semanticPassed = false;
             } else {
-                resultArea.value += '✅ SEMANTIC PASSED!';
+                resultArea.value += 'SEMANTIC PASSED!';
                 appState.semanticPassed = true;
                 appState.variables = vars;
             }
