@@ -54,7 +54,6 @@ public class UIComponents {
         controls.setSpacing(12);
         controls.setAlignment(Pos.CENTER_RIGHT);
         
-        // FIXED: Improved button design with better styling - using ASCII characters
         Button minimizeBtn = createControlButton("─\r\n" + "");
         Button maximizeBtn = createControlButton("□\r\n" + "");
         Button closeBtn = createControlButton("×\r\n" + "");
@@ -577,4 +576,5 @@ public class UIComponents {
     public VBox getSyntaxStage() { return syntaxStage; }
     public VBox getSemanticStage() { return semanticStage; }
     public Button getClearButton() { return clearBtn; }
+
 }
