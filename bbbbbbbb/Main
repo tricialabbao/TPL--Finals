@@ -1,0 +1,16 @@
+package com.tam.compiler;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        CompilerUI compilerUI = new CompilerUI();
+        compilerUI.start(primaryStage);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
