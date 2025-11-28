@@ -556,19 +556,90 @@ public class UIComponents {
         }
     }
 
-    public void updateButtonStates(AppState appState) {
-        lexicalStage.setDisable(!appState.isFileLoaded());
-        syntaxStage.setDisable(!appState.isLexicalPassed());
-        semanticStage.setDisable(!appState.isSyntaxPassed());
-        clearBtn.setDisable(!appState.isFileLoaded());
-        
-        lexicalStage.setOpacity(appState.isFileLoaded() ? 1.0 : 0.5);
-        syntaxStage.setOpacity(appState.isLexicalPassed() ? 1.0 : 0.5);
-        semanticStage.setOpacity(appState.isSyntaxPassed() ? 1.0 : 0.5);
-        clearBtn.setOpacity(appState.isFileLoaded() ? 1.0 : 0.6);
+    /*
+     * HELPER METHOD: updateStageState
+     * Updates the visual and interactive state of a specific analysis stage
+     * * WHY WE USE setMouseTransparent:
+     * We use setMouseTransparent(true) for both SUCCESS and ERROR states
+     * Standard setDisable(true) lowers opacity, which ruins the bright green/red colors
+     * This keeps them visually bright (opacity 1.0) but unclickable
+     */
+    private void updateStageState(VBox stage, boolean isActive, boolean isPassed, boolean isError) {
+        if (isError) {
+            // CASE: ERROR (Failed State)
+            // keep it bright so the user sees the error clearly but prevent clicking
+            stage.setDisable(false);
+            stage.setMouseTransparent(true);
+            stage.setOpacity(1.0);
+        }else if (isPassed) {
+            // CASE: SUCCESS (Phase Completed)
+            // Keep bright green, but ignore clicks to prevent re-running
+            stage.setDisable(false);
+            stage.setMouseTransparent(true);
+            stage.setOpacity(1.0);
+        } else if (isActive) {
+            // CASE: ACTIVE (Current Step)
+            // Standard interactive state.
+            stage.setDisable(false);
+            stage.setMouseTransparent(false);
+            stage.setOpacity(1.0);
+        } else {
+            // CASE: LOCKED (Future Step)
+            // Standard disabled state with visual dimming.
+            stage.setDisable(true);
+            stage.setMouseTransparent(false);
+            stage.setOpacity(0.5);
+        }
     }
 
-    //getters
+    // ==================== MAIN METHOD ====================
+    /*
+     * Manages the sequential flow: Lexical -> Syntax -> Semantic.
+     * Enforces the rule that a stage only becomes interactive if the previous one passed.
+     */
+    public void updateButtonStates(AppState appState) {
+        boolean fileLoaded = appState.isFileLoaded();
+        boolean hasError = appState.hasError();
+
+        // 1. Upload Zone
+        // Use standard disabling here to visually dim the zone when a file is loaded.
+        uploadZone.setDisable(fileLoaded);
+        uploadZone.setOpacity(fileLoaded ? 0.5 : 1.0);
+
+        // 2. Analysis Stages
+        // Logic: A stage is ACTIVE only if:
+        //  a) Previous steps are done
+        //  b) This step isn't done yet
+        //  c) NO ERRORS have occurred anywhere (!hasError)
+
+        // Lexical Analysis: Active if file is loaded & not passed yet
+        updateStageState(lexicalStage,
+                !hasError && fileLoaded && !appState.isLexicalPassed(),
+                appState.isLexicalPassed(),
+                hasError && !appState.isLexicalPassed() && fileLoaded
+        );
+
+        // Syntax Analysis: Active if Lexical passed & not passed yet
+        updateStageState(syntaxStage,
+                !hasError && appState.isLexicalPassed() && !appState.isSyntaxPassed(),
+                appState.isSyntaxPassed(),
+                hasError && !appState.isSyntaxPassed() && appState.isLexicalPassed()
+        );
+
+        // Semantic Analysis: Active if Syntax passed & not passed yet
+        updateStageState(semanticStage,
+                !hasError && appState.isSyntaxPassed() && !appState.isSemanticPassed(),
+                appState.isSemanticPassed(),
+                hasError && !appState.isSemanticPassed() && appState.isSyntaxPassed()
+        );
+
+        // 3. Clear Button
+        // Always enabled if file is loaded
+        clearBtn.setDisable(!fileLoaded);
+        clearBtn.setOpacity(fileLoaded ? 1.0 : 0.6);
+    }
+
+    // ==================== Getters ====================
     public TextArea getCodeArea() { return codeArea; }
     public VBox getUploadZone() { return uploadZone; }
     public VBox getLexicalStage() { return lexicalStage; }

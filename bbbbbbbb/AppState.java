@@ -8,6 +8,7 @@ public class AppState {
     private boolean lexicalPassed = false;
     private boolean syntaxPassed = false;
     private boolean semanticPassed = false;
+    private boolean hasError = false;
     private List<LexicalAnalyzer.Token> tokens;
     private Map<String, SemanticAnalyzer.VariableInfo> variables;
 
@@ -16,6 +17,7 @@ public class AppState {
         lexicalPassed = false;
         syntaxPassed = false;
         semanticPassed = false;
+        hasError = false;
         tokens = null;
         variables = null;
     }
@@ -44,4 +46,6 @@ public class AppState {
     public void setTokens(List<LexicalAnalyzer.Token> tokens) { this.tokens = tokens; }
     public Map<String, SemanticAnalyzer.VariableInfo> getVariables() { return variables; }
     public void setVariables(Map<String, SemanticAnalyzer.VariableInfo> variables) { this.variables = variables; }
+    public boolean hasError() { return hasError; }
+    public void setHasError(boolean hasError) { this.hasError = hasError; }
 }

@@ -46,38 +46,52 @@ public class LexicalAnalyzer {
         "KEYWORD", "IDENTIFIER", "NUMBER", "STRING", "CHAR", "ASSIGNMENT", "SEMICOLON"
     };
 
+    // REGEX EXPLANATION:
+    // This pattern looks for tokens in a specific order:
+    // Group 1: Strings ("example") - caught first so content inside isn't split
+    // Group 2: Single characters ('a')
+    // Group 3: Delimiters and Operators (= or ;)
+    // Group 4: Numbers (123, 1.5) or Identifiers (variable names)
+    private final Pattern tokenPattern = Pattern.compile(
+            "(\"[^\"]*\")|('[^']')|(=|;)|(-?\\d+(?:\\.\\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)"
+    );
+
     public Result analyze(String code) {
         if (code == null || code.trim().isEmpty()) {
             return new Result(false, "There is no code open to analyze", new ArrayList<>(), new ArrayList<>());
         }
 
-        String[] lines = code.split("\n");
         List<Token> tokens = new ArrayList<>();
         List<String> errors = new ArrayList<>();
+        String[] lines = code.split("\n");
 
         for (int lineNum = 0; lineNum < lines.length; lineNum++) {
             String line = lines[lineNum].trim();
             if (line.isEmpty()) continue;
 
-            String[] lineTokens = line.split("(\\s+|=|;)");
-            for (String token : lineTokens) {
-                token = token.trim();
-                if (token.isEmpty()) continue;
+            java.util.regex.Matcher matcher = tokenPattern.matcher(line);
 
-                String type = identifyTokenType(token);
+            // We use matcher.find() instead of string.split()
+            // split() consumes delimiters (deleting '=' and ';'), making them impossible to detect
+            // matcher.find() extracts them as distinct tokens without removal
+            while (matcher.find()) {
+                String tokenStr = matcher.group().trim();
+
+                if (tokenStr.isEmpty()) continue;
+
+                String type = identifyTokenType(tokenStr);
+
                 if (type != null) {
-                    tokens.add(new Token(type, token, lineNum + 1));
+                    tokens.add(new Token(type, tokenStr, lineNum + 1));
                 } else {
-                    errors.add("Line " + (lineNum + 1) + ": Invalid token '" + token + "'");
+                    errors.add("Line " + (lineNum + 1) + ": Invalid token '" + tokenStr + "'");
                 }
             }
         }
 
         if (!errors.isEmpty()) {
-            return new Result(false, "Lexical Analysis Failed!\n\n" + String.join("\n", errors), 
-                            new ArrayList<>(), errors);
+            return new Result(false, "Lexical Analysis Failed!\n\n" + String.join("\n", errors), new ArrayList<>(), errors);
         }
-
         return new Result(true, "Lexical Analysis Passed!", tokens, new ArrayList<>());
     }
 

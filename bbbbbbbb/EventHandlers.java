@@ -73,6 +73,7 @@ public class EventHandlers {
                         uiComponents.setStageStatus("lexical", "success");
                     } else {
                         appState.setLexicalPassed(false);
+                        appState.setHasError(true);
                         uiComponents.setStageStatus("lexical", "error");
                     }
                     
@@ -102,6 +103,7 @@ public class EventHandlers {
                         uiComponents.setStageStatus("syntax", "success");
                     } else {
                         appState.setSyntaxPassed(false);
+                        appState.setHasError(true);
                         uiComponents.setStageStatus("syntax", "error");
                     }
                     
@@ -132,6 +134,7 @@ public class EventHandlers {
                         uiComponents.setStageStatus("semantic", "success");
                     } else {
                         appState.setSemanticPassed(false);
+                        appState.setHasError(true);
                         uiComponents.setStageStatus("semantic", "error");
                     }
                     
