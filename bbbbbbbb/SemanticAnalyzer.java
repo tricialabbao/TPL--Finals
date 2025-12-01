@@ -43,7 +43,7 @@ public class SemanticAnalyzer {
         typeChecks.put("int", Pattern.compile("^-?\\d+$"));
         typeChecks.put("byte", Pattern.compile("^-?\\d+$"));
         typeChecks.put("short", Pattern.compile("^-?\\d+$"));
-        typeChecks.put("long", Pattern.compile("^-?\\d+$"));
+        typeChecks.put("long", Pattern.compile("^-?\\d+[lL]?$"));
 
         // Doubles: accepts numbers with decimal points (1.5) or strict 'd' suffix (1.5d)
         // Also allows optional 'd' or 'D' at the end
