@@ -35,7 +35,7 @@ public class LexicalAnalyzer {
     private final Pattern[] tokenPatterns = {
         Pattern.compile("^(int|double|float|char|boolean|byte|short|long|String)$"),
         Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*$"),
-        Pattern.compile("^-?\\d+(\\.\\d+)?$"),
+        Pattern.compile("^-?\\d+(\\.\\d+)?[fFdD]?$"),
         Pattern.compile("^\"[^\"]*\"$"),
         Pattern.compile("^'.'$"),
         Pattern.compile("^=$"),
@@ -53,7 +53,15 @@ public class LexicalAnalyzer {
     // Group 3: Delimiters and Operators (= or ;)
     // Group 4: Numbers (123, 1.5) or Identifiers (variable names)
     private final Pattern tokenPattern = Pattern.compile(
-            "(\"[^\"]*\")|('[^']')|(=|;)|(-?\\d+(?:\\.\\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)"
+            // Group 1: Strings ("example") - Catch these first so spaces/keywords inside aren't split
+            "(\"[^\"]*\")" +
+            // Group 2: Single characters ('a')
+            "|('[^']')" +
+            // Group 3: Delimiters (= or ;)
+            "|(=|;)" +
+            // Group 4: Numbers. Now optimized to catch suffixes like 1.5f or 100d
+            // If we don't catch the suffix here, 'f' becomes an IDENTIFIER token (Error)
+            "|(-?\\d+(?:\\.\\d+)?[fFdD]?|[a-zA-Z_][a-zA-Z0-9_]*)"
     );
 
     public Result analyze(String code) {

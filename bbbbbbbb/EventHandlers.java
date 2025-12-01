@@ -60,10 +60,17 @@ public class EventHandlers {
         uiComponents.setResultText("Performing Lexical Analysis\n\n", false);
         uiComponents.setStageStatus("lexical", "running");
 
+        // THREADING LOGIC:
+        // We run the analysis in a background thread to prevent the UI from freezing
+        // If we ran this on the main JavaFX thread, the window would stop responding
+        // during the Thread.sleep delay
         new Thread(() -> {
             try {
+                // Fake delay to simulate complex processing (makes the UI look cooler)
                 Thread.sleep(1500);
-                
+
+                // UI updates MUST happen on the main JavaFX Application Thread.
+                // Platform.runLater queues this code to run safely on the main thread.
                 javafx.application.Platform.runLater(() -> {
                     LexicalAnalyzer.Result result = lexicalAnalyzer.analyze(code);
                     
@@ -72,6 +79,7 @@ public class EventHandlers {
                         appState.setTokens(result.tokens);
                         uiComponents.setStageStatus("lexical", "success");
                     } else {
+                        // On Failure: Set Error flag. This locks the UI (Check UIComponents logic)
                         appState.setLexicalPassed(false);
                         appState.setHasError(true);
                         uiComponents.setStageStatus("lexical", "error");
@@ -150,10 +158,13 @@ public class EventHandlers {
     private void handleClear() {
         uiComponents.getCodeArea().clear();
         uiComponents.setResultText("Welcome! Load a Java file to start compilation analysis.", false);
+
+        // Full Reset of the State Machine
         appState.reset();
         uiComponents.updateLineNumbers();
         uiComponents.updateButtonStates(appState);
-        
+
+        // Reset Visual Indicators to gray
         uiComponents.setStageStatus("lexical", "default");
         uiComponents.setStageStatus("syntax", "default");
         uiComponents.setStageStatus("semantic", "default");

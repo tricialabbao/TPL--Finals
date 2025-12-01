@@ -95,11 +95,14 @@ public class SemanticAnalyzer {
             String name = matcher.group(2);
             String value = matcher.group(3).trim();
 
+            //Duplicate Declaration Check
+            // You cannot declare the same variable name twice in the same scope.
             if (variables.containsKey(name)) {
                 errors.add("Line " + (lineNum + 1) + ": '" + name + "' already declared.");
                 continue;
             }
-
+            //RULE 2: Type Compatibility Check
+            // Does the value match the specific Regex for that type?
             if (!isValidValueForType(type, value)) {
                 errors.add("Line " + (lineNum + 1) + ": Invalid value '" + value + "' for type '" + type + "'");
                 continue;
