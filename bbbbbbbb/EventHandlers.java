@@ -27,6 +27,7 @@ public class EventHandlers {
         this.primaryStage = primaryStage;
     }
 
+    // Link UI actions/clicks to Java methods
     public void setupAllHandlers() {
         uiComponents.getUploadZone().setOnMouseClicked(e -> handleFileUpload());
         uiComponents.getLexicalStage().setOnMouseClicked(e -> handleLexicalAnalysis());
@@ -36,6 +37,7 @@ public class EventHandlers {
     }
 
     private void handleFileUpload() {
+        // Open native OS file dialog
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("Java Files", "*.java", "*.txt")
@@ -61,16 +63,16 @@ public class EventHandlers {
         uiComponents.setStageStatus("lexical", "running");
 
         // THREADING LOGIC:
-        // We run the analysis in a background thread to prevent the UI from freezing
-        // If we ran this on the main JavaFX thread, the window would stop responding
-        // during the Thread.sleep delay
+        // We run the analysis in a background thread (new Thread())
+        // This prevents the UI from freezing or becoming unresponsive while processing.
         new Thread(() -> {
             try {
-                // Fake delay to simulate complex processing (makes the UI look cooler)
+                // Artificial delay to simulate heavy processing (for visual effect)
                 Thread.sleep(1500);
 
-                // UI updates MUST happen on the main JavaFX Application Thread.
-                // Platform.runLater queues this code to run safely on the main thread.
+                // === UI UPDATES ===
+                // JavaFX does not allow background threads to update the UI directly
+                // We must use Platform.runLater() to push updates back to the Main Application Thread
                 javafx.application.Platform.runLater(() -> {
                     LexicalAnalyzer.Result result = lexicalAnalyzer.analyze(code);
                     
@@ -79,7 +81,7 @@ public class EventHandlers {
                         appState.setTokens(result.tokens);
                         uiComponents.setStageStatus("lexical", "success");
                     } else {
-                        // On Failure: Set Error flag. This locks the UI (Check UIComponents logic)
+                        // On Failure: Lock the app flow by setting HasError = true
                         appState.setLexicalPassed(false);
                         appState.setHasError(true);
                         uiComponents.setStageStatus("lexical", "error");

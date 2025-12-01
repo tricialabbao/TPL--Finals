@@ -1,0 +1,51 @@
+TransactionID,Date,SalesPerson,Region,Product,Category,UnitPrice,Quantity,Discount,TotalSales,PaymentMethod
+TXN-2001,2024-10-01,Michael Davis,North,Logitech MX Master 3,Accessories,99.99,5,0.00,499.95,Credit Card
+TXN-2002,2024-10-01,Sarah Jenkins,South,Dell XPS 15,Laptops,1899.00,1,0.05,1804.05,PayPal
+TXN-2003,2024-10-02,David Chen,East,Samsung Galaxy Tab S9,Tablets,799.99,NaN,0.00,NaN,Credit Card
+TXN-2004,2024-10-02,NaN,West,Sony WH-1000XM5,Audio,348.00,2,0.10,626.40,Debit Card
+TXN-2005,2024-10-03,Jessica Lee,North,Dell XPS 15,Laptops,1899.00,1,0.00,1899.00,Credit Card
+TXN-2006,2024-10-03,Michael Davis,South,Logitech MX Master 3,Accessories,NaN,10,0.05,NaN,Bank Transfer
+TXN-2007,2024-10-04,Sarah Jenkins,East,HP Spectre x360,Laptops,1399.99,1,0.00,1399.99,PayPal
+TXN-2008,2024-10-04,David Chen,West,iPad Pro 12.9,Tablets,1099.00,3,NaN,3297.00,Credit Card
+TXN-2009,2024-10-05,Jessica Lee,NaN,Sony WH-1000XM5,Audio,348.00,1,0.00,348.00,Debit Card
+TXN-2010,2024-10-05,Michael Davis,North,NaN,Accessories,99.99,4,0.00,399.96,Credit Card
+TXN-2011,2024-10-06,Sarah Jenkins,South,Samsung Galaxy Tab S9,Tablets,799.99,2,0.10,1439.98,PayPal
+TXN-2012,2024-10-06,NaN,East,Dell XPS 15,Laptops,NaN,1,0.00,NaN,Credit Card
+TXN-2013,2024-10-07,David Chen,West,Logitech MX Master 3,Accessories,99.99,15,0.05,1424.86,Bank Transfer
+TXN-2014,2024-10-07,Jessica Lee,North,HP Spectre x360,Laptops,1399.99,2,0.00,2799.98,Credit Card
+TXN-2015,2024-10-08,Michael Davis,South,iPad Pro 12.9,Tablets,1099.00,NaN,0.00,NaN,PayPal
+TXN-2016,2024-10-08,Sarah Jenkins,East,Sony WH-1000XM5,Audio,348.00,5,0.15,1479.00,Credit Card
+TXN-2017,2024-10-09,David Chen,NaN,Samsung Galaxy Tab S9,Tablets,799.99,1,0.00,799.99,Debit Card
+TXN-2018,2024-10-09,Jessica Lee,West,Dell XPS 15,Laptops,1899.00,3,0.05,5412.15,Bank Transfer
+TXN-2019,2024-10-10,Michael Davis,North,Logitech MX Master 3,Accessories,99.99,2,NaN,199.98,Credit Card
+TXN-2020,2024-10-10,Sarah Jenkins,South,NaN,Laptops,1399.99,1,0.00,1399.99,PayPal
+TXN-2021,2024-10-11,David Chen,East,iPad Pro 12.9,Tablets,NaN,2,0.00,NaN,Credit Card
+TXN-2022,2024-10-11,NaN,West,Sony WH-1000XM5,Audio,348.00,4,0.10,1252.80,Debit Card
+TXN-2023,2024-10-12,Jessica Lee,North,Samsung Galaxy Tab S9,Tablets,799.99,1,0.00,799.99,Credit Card
+TXN-2024,2024-10-12,Michael Davis,South,Dell XPS 15,Laptops,1899.00,1,0.00,1899.00,PayPal
+TXN-2025,2024-10-13,Sarah Jenkins,East,Logitech MX Master 3,Accessories,99.99,20,0.20,1599.84,Bank Transfer
+TXN-2026,2024-10-13,David Chen,West,HP Spectre x360,Laptops,1399.99,NaN,0.05,NaN,Credit Card
+TXN-2027,2024-10-14,Jessica Lee,North,iPad Pro 12.9,Tablets,1099.00,1,0.00,1099.00,Credit Card
+TXN-2028,2024-10-14,Michael Davis,NaN,Sony WH-1000XM5,Audio,NaN,2,0.00,NaN,Debit Card
+TXN-2029,2024-10-15,Sarah Jenkins,South,Samsung Galaxy Tab S9,Tablets,799.99,3,0.00,2399.97,PayPal
+TXN-2030,2024-10-15,David Chen,East,Dell XPS 15,Laptops,1899.00,1,NaN,1899.00,Credit Card
+TXN-2031,2024-10-16,Jessica Lee,West,Logitech MX Master 3,Accessories,99.99,5,0.00,499.95,Credit Card
+TXN-2032,2024-10-16,NaN,North,HP Spectre x360,Laptops,1399.99,2,0.10,2519.98,Bank Transfer
+TXN-2033,2024-10-17,Michael Davis,South,iPad Pro 12.9,Tablets,1099.00,1,0.00,1099.00,PayPal
+TXN-2034,2024-10-17,Sarah Jenkins,East,NaN,Audio,348.00,3,0.00,1044.00,Credit Card
+TXN-2035,2024-10-18,David Chen,West,Samsung Galaxy Tab S9,Tablets,799.99,4,0.05,3039.96,Debit Card
+TXN-2036,2024-10-18,Jessica Lee,North,Dell XPS 15,Laptops,NaN,1,0.00,NaN,Credit Card
+TXN-2037,2024-10-19,Michael Davis,South,Logitech MX Master 3,Accessories,99.99,10,0.00,999.90,Credit Card
+TXN-2038,2024-10-19,Sarah Jenkins,NaN,HP Spectre x360,Laptops,1399.99,1,0.00,1399.99,PayPal
+TXN-2039,2024-10-20,David Chen,East,iPad Pro 12.9,Tablets,1099.00,2,0.10,1978.20,Bank Transfer
+TXN-2040,2024-10-20,Jessica Lee,West,Sony WH-1000XM5,Audio,348.00,NaN,0.00,NaN,Credit Card
+TXN-2041,2024-10-21,NaN,North,Samsung Galaxy Tab S9,Tablets,799.99,1,0.00,799.99,Debit Card
+TXN-2042,2024-10-21,Michael Davis,South,Dell XPS 15,Laptops,1899.00,2,0.00,3798.00,Credit Card
+TXN-2043,2024-10-22,Sarah Jenkins,East,Logitech MX Master 3,Accessories,99.99,5,NaN,499.95,PayPal
+TXN-2044,2024-10-22,David Chen,West,HP Spectre x360,Laptops,NaN,1,0.05,NaN,Credit Card
+TXN-2045,2024-10-23,Jessica Lee,North,iPad Pro 12.9,Tablets,1099.00,3,0.00,3297.00,Bank Transfer
+TXN-2046,2024-10-23,Michael Davis,South,Sony WH-1000XM5,Audio,348.00,2,0.00,696.00,Credit Card
+TXN-2047,2024-10-24,Sarah Jenkins,East,NaN,Tablets,799.99,1,0.00,799.99,PayPal
+TXN-2048,2024-10-24,David Chen,West,Dell XPS 15,Laptops,1899.00,1,0.00,1899.00,Debit Card
+TXN-2049,2024-10-25,Jessica Lee,North,Logitech MX Master 3,Accessories,99.99,NaN,0.00,NaN,Credit Card
+TXN-2050,2024-10-25,Michael Davis,South,HP Spectre x360,Laptops,1399.99,2,0.10,2519.98,Bank Transfer

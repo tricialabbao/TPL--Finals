@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class LexicalAnalyzer {
-    
+
+    // Simple Token structure to hold our data
     public static class Token {
         public final String type;
         public final String value;
@@ -17,7 +18,8 @@ public class LexicalAnalyzer {
             this.line = line;
         }
     }
-    
+
+    // Result object to send data back to the UI
     public static class Result {
         public final boolean success;
         public final String message;
@@ -31,7 +33,9 @@ public class LexicalAnalyzer {
             this.errors = errors;
         }
     }
-    
+
+    // === REGEX PATTERNS FOR TOKEN CLASSIFICATION ===
+    // We use these strictly to label a token AFTER we've extracted it.
     private final Pattern[] tokenPatterns = {
         Pattern.compile("^(int|double|float|char|boolean|byte|short|long|String)$"),
         Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*$"),
@@ -41,29 +45,31 @@ public class LexicalAnalyzer {
         Pattern.compile("^=$"),
         Pattern.compile("^;$")
     };
-    
+
     private final String[] tokenTypes = {
         "KEYWORD", "IDENTIFIER", "NUMBER", "STRING", "CHAR", "ASSIGNMENT", "SEMICOLON"
     };
 
-    // REGEX EXPLANATION:
-    // This pattern looks for tokens in a specific order:
-    // Group 1: Strings ("example") - caught first so content inside isn't split
-    // Group 2: Single characters ('a')
-    // Group 3: Delimiters and Operators (= or ;)
-    // Group 4: Numbers (123, 1.5) or Identifiers (variable names)
+    // === MAIN TOKEN EXTRACTION REGEX ===
+    // This is the engine of the Lexer. The order is important
+    // We match complex structures (like Strings) first so they aren't chopped up.
     private final Pattern tokenPattern = Pattern.compile(
-            // Group 1: Strings ("example") - Catch these first so spaces/keywords inside aren't split
+            // Strings
             "(\"[^\"]*\")" +
-            // Group 2: Single characters ('a')
+            // Single characters ('a')
             "|('[^']')" +
-            // Group 3: Delimiters (= or ;)
+            //Delimiters (= or ;)
             "|([=;])" +
-            // Group 4: Numbers
-            "|(-?\\d+(?:\\.\\d+)?[fFdDlL]?|[a-zA-Z_][a-zA-Z0-9_]*)"
+            // Numbers (Integers, Decimals, with f/L suffixes)
+            "|(-?\\d+(?:\\.\\d+)?[fFdDlL]?" +
+            //Identifiers (Variable names or Keywords)
+            "|[a-zA-Z_][a-zA-Z0-9_]*)" +
+            //Matches any non-whitespace character (\S) that wasn't caught above
+            "|(\\S)"
     );
 
     public Result analyze(String code) {
+        // Safety check: Don't crash on empty input
         if (code == null || code.trim().isEmpty()) {
             return new Result(false, "There is no code open to analyze", new ArrayList<>(), new ArrayList<>());
         }
@@ -84,6 +90,11 @@ public class LexicalAnalyzer {
             while (matcher.find()) {
                 String tokenStr = matcher.group().trim();
 
+                if (matcher.group(6) != null) {
+                    errors.add("Line " + (lineNum + 1) + ": Unknown token '" + tokenStr + "'");
+                    continue;
+                }
+
                 if (tokenStr.isEmpty()) continue;
 
                 String type = identifyTokenType(tokenStr);
@@ -96,12 +107,14 @@ public class LexicalAnalyzer {
             }
         }
 
+        // If even one error exists, the whole analysis fails
         if (!errors.isEmpty()) {
             return new Result(false, "Lexical Analysis Failed!\n\n" + String.join("\n", errors), new ArrayList<>(), errors);
         }
         return new Result(true, "Lexical Analysis Passed!", tokens, new ArrayList<>());
     }
 
+    // Helper: Matches the raw string against our specific definitions
     private String identifyTokenType(String token) {
         for (int i = 0; i < tokenPatterns.length; i++) {
             if (tokenPatterns[i].matcher(token).matches()) {

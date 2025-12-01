@@ -17,7 +17,8 @@ public class SyntaxAnalyzer {
             this.errors = errors;
         }
     }
-    
+
+    // Pattern to enforce "Type Name = Value" structure
     private final Pattern declarationPattern = 
         Pattern.compile("^(int|double|float|char|boolean|byte|short|long|String)\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*=\\s*(.+)$");
 
@@ -33,17 +34,24 @@ public class SyntaxAnalyzer {
             String line = lines[lineNum].trim();
             if (line.isEmpty()) continue;
 
+            // Semicolon Check
+            // Every statement in Java must end with a semicolon.
             if (!line.endsWith(";")) {
                 errors.add("Line " + (lineNum + 1) + ": Missing semicolon");
                 continue;
             }
 
+            // Remove semicolon to check the rest of the syntax
             String cleanLine = line.substring(0, line.length() - 1).trim();
+
+            //Structure Check
+            // Does the line follow strict "Type Name = Value" syntax?
             if (!declarationPattern.matcher(cleanLine).matches()) {
                 errors.add("Line " + (lineNum + 1) + ": Invalid declaration syntax");
             }
         }
 
+        // Fail if any errors were found
         if (!errors.isEmpty()) {
             return new Result(false, "Syntax Analysis Failed\n\n" + String.join("\n", errors), errors);
         }

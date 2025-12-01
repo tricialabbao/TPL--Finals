@@ -80,7 +80,7 @@ public class CompilerUI {
         );
         eventHandlers.setupAllHandlers();
         
-        // FIXED: Set initial button states (all disabled until file is loaded)
+        // Set initial button states (all disabled until file is loaded)
         uiComponents.updateButtonStates(appState);
     }
 

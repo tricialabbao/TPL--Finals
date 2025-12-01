@@ -1,0 +1,51 @@
+transaction_id,date,sales_rep_name,region,product_sku,unit_price,quantity,discount_percent,total_revenue,payment_status,customer_sentiment
+TXN-1001,2025-01-01,Chad Thundercock,North,WIDGET-A,50.00,10,0.05,475.00,Paid,Neutral
+TXN-1002,2025-01-01,Karen Smith,South,WIDGET-B,NaN,5,0.00,NaN,Paid,Angry
+TXN-1003,2025-01-02,Steve from Accounting,East,WIDGET-A,50.00,2,0.10,90.00,Pending,Happy
+TXN-1004,2025-01-02,Chad Thundercock,West,WIDGET-C,120.00,1,0.00,120.00,Paid,NaN
+TXN-1005,2025-01-03,NaN,North,WIDGET-A,50.00,100,0.20,4000.00,Failed,NaN
+TXN-1006,2025-01-03,Karen Smith,South,WIDGET-B,75.00,NaN,0.00,NaN,Paid,Neutral
+TXN-1007,2025-01-04,Intern Dave,East,WIDGET-C,120.00,3,NaN,360.00,Paid,Happy
+TXN-1008,2025-01-04,Steve from Accounting,West,WIDGET-A,50.00,5,0.05,237.50,Refunded,Angry
+TXN-1009,2025-01-05,Chad Thundercock,NaN,WIDGET-B,75.00,10,0.10,675.00,Paid,Happy
+TXN-1010,2025-01-05,Karen Smith,South,NaN,NaN,2,0.00,0.00,Paid,Neutral
+TXN-1011,2025-01-06,Intern Dave,East,WIDGET-A,50.00,1,0.00,50.00,Paid,NaN
+TXN-1012,2025-01-06,Steve from Accounting,West,WIDGET-C,120.00,4,0.15,408.00,Pending,Happy
+TXN-1013,2025-01-07,Chad Thundercock,North,WIDGET-B,75.00,20,0.25,1125.00,Paid,Happy
+TXN-1014,2025-01-07,NaN,South,WIDGET-A,50.00,5,NaN,250.00,Paid,Neutral
+TXN-1015,2025-01-08,Intern Dave,East,WIDGET-C,120.00,NaN,0.00,NaN,Failed,Angry
+TXN-1016,2025-01-08,Karen Smith,West,WIDGET-A,50.00,10,0.05,475.00,Paid,Happy
+TXN-1017,2025-01-09,Steve from Accounting,North,WIDGET-B,75.00,3,0.00,225.00,Paid,NaN
+TXN-1018,2025-01-09,Chad Thundercock,South,WIDGET-C,120.00,1,0.00,120.00,Refunded,Angry
+TXN-1019,2025-01-10,Intern Dave,NaN,WIDGET-A,NaN,50,0.10,NaN,Paid,Neutral
+TXN-1020,2025-01-10,Karen Smith,West,WIDGET-B,75.00,2,0.00,150.00,Paid,Happy
+TXN-1021,2025-01-11,Steve from Accounting,North,WIDGET-C,120.00,5,0.05,570.00,Pending,NaN
+TXN-1022,2025-01-11,Chad Thundercock,South,WIDGET-A,50.00,8,0.00,400.00,Paid,Happy
+TXN-1023,2025-01-12,NaN,East,WIDGET-B,75.00,4,0.20,240.00,Paid,Neutral
+TXN-1024,2025-01-12,Intern Dave,West,NaN,120.00,1,0.00,120.00,Failed,Angry
+TXN-1025,2025-01-13,Karen Smith,North,WIDGET-A,50.00,12,0.10,540.00,Paid,Happy
+TXN-1026,2025-01-13,Steve from Accounting,South,WIDGET-B,75.00,NaN,0.00,NaN,Paid,NaN
+TXN-1027,2025-01-14,Chad Thundercock,East,WIDGET-C,120.00,2,0.00,240.00,Paid,Neutral
+TXN-1028,2025-01-14,Intern Dave,West,WIDGET-A,50.00,6,NaN,300.00,Paid,Happy
+TXN-1029,2025-01-15,Karen Smith,North,WIDGET-B,75.00,3,0.00,225.00,Refunded,Angry
+TXN-1030,2025-01-15,NaN,South,WIDGET-C,NaN,10,0.15,NaN,Paid,Happy
+TXN-1031,2025-01-16,Steve from Accounting,East,WIDGET-A,50.00,5,0.00,250.00,Paid,Neutral
+TXN-1032,2025-01-16,Chad Thundercock,West,WIDGET-B,75.00,1,0.00,75.00,Pending,NaN
+TXN-1033,2025-01-17,Intern Dave,North,WIDGET-C,120.00,2,0.00,240.00,Paid,Happy
+TXN-1034,2025-01-17,Karen Smith,NaN,WIDGET-A,50.00,100,0.25,3750.00,Paid,Happy
+TXN-1035,2025-01-18,Steve from Accounting,East,WIDGET-B,75.00,4,0.10,270.00,Failed,Angry
+TXN-1036,2025-01-18,Chad Thundercock,West,NaN,120.00,1,0.00,120.00,Paid,Neutral
+TXN-1037,2025-01-19,Intern Dave,North,WIDGET-A,NaN,10,0.05,NaN,Paid,NaN
+TXN-1038,2025-01-19,NaN,South,WIDGET-B,75.00,5,0.00,375.00,Refunded,Angry
+TXN-1039,2025-01-20,Karen Smith,East,WIDGET-C,120.00,2,0.00,240.00,Paid,Happy
+TXN-1040,2025-01-20,Steve from Accounting,West,WIDGET-A,50.00,3,NaN,150.00,Paid,Neutral
+TXN-1041,2025-01-21,Chad Thundercock,North,WIDGET-B,75.00,20,0.20,1200.00,Paid,Happy
+TXN-1042,2025-01-21,Intern Dave,South,WIDGET-C,120.00,NaN,0.00,NaN,Pending,NaN
+TXN-1043,2025-01-22,Karen Smith,East,WIDGET-A,50.00,5,0.00,250.00,Paid,Happy
+TXN-1044,2025-01-22,Steve from Accounting,West,WIDGET-B,75.00,2,0.00,150.00,Failed,Angry
+TXN-1045,2025-01-23,NaN,North,WIDGET-C,NaN,1,0.00,NaN,Paid,Neutral
+TXN-1046,2025-01-23,Chad Thundercock,South,WIDGET-A,50.00,10,0.05,475.00,Paid,Happy
+TXN-1047,2025-01-24,Intern Dave,NaN,WIDGET-B,75.00,5,0.10,337.50,Refunded,Angry
+TXN-1048,2025-01-24,Karen Smith,West,WIDGET-C,120.00,3,0.00,360.00,Paid,NaN
+TXN-1049,2025-01-25,Steve from Accounting,North,NaN,50.00,15,0.00,750.00,Paid,Happy
+TXN-1050,2025-01-25,Chad Thundercock,South,WIDGET-B,75.00,2,NaN,150.00,Paid,Neutral

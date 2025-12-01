@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SemanticAnalyzer {
-    
+
+    // Store info about declared variables to check for duplicates
     public static class VariableInfo {
         public final String type;
         public final String value;
@@ -35,27 +36,29 @@ public class SemanticAnalyzer {
     }
     
     private final Map<String, Pattern> typeChecks = new HashMap<>();
+
+    // Regex to break down a line into: TYPE | NAME | VALUE
     private final Pattern declarationPattern = 
         Pattern.compile("^(int|double|float|char|boolean|byte|short|long|String)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=\\s*(.+)$");
 
     public SemanticAnalyzer() {
-        // Integers: accepts positive or negative whole numbers
+        // === INITIALIZE TYPE RULES ===
+
+        // Integers: Whole numbers (pos/neg)
         typeChecks.put("int", Pattern.compile("^-?\\d+$"));
         typeChecks.put("byte", Pattern.compile("^-?\\d+$"));
         typeChecks.put("short", Pattern.compile("^-?\\d+$"));
+
+        // Longs: Whole numbers, optionally ending with 'l' or 'L'
         typeChecks.put("long", Pattern.compile("^-?\\d+[lL]?$"));
 
-        // Doubles: accepts numbers with decimal points (1.5) or strict 'd' suffix (1.5d)
-        // Also allows optional 'd' or 'D' at the end
+        // Doubles: Decimals, optionally ending with 'd'
         typeChecks.put("double", Pattern.compile("^-?\\d+(\\.\\d+)?[dD]?$"));
 
-        // Floats: Strict Java rule.
-        // 1. Accepts decimal numbers ONLY if they have 'f' or 'F' at the end (1.5f)
-        // 2. Accepts whole integers (1) because Java automatically converts int to float
-        // 3. Rejects plain decimals like "1.5" because that is a double literal in Java
+        // Floats: Must have 'f' suffix (1.5f) OR be a whole number (implicit cast)
         typeChecks.put("float", Pattern.compile("^-?\\d+(\\.\\d+)?[fF]$|^-?\\d+$"));
 
-        // Characters: must be a single character inside single quotes
+        // Chars: Single character in single quotes
         typeChecks.put("char", Pattern.compile("^'.'$"));
 
         // Booleans: strict true or false
@@ -78,15 +81,14 @@ public class SemanticAnalyzer {
             String line = lines[lineNum].trim();
             if (line.isEmpty()) continue;
 
-            // FIX: Handle semicolon removal carefully.
-            // Previously, .replace(";", "") removed ALL semicolons, even those inside strings.
-            // Example bug: String s = "Error: no semicolon;"; became "Error: no semicolon"
-            // The fix below only removes the semicolon if it is at the very end of the line.
+            // We only strip the semicolon if it's the very last character
+            // This prevents accidental deletion of semicolons inside strings (e.g. "Error;")
             String cleanLine = line;
             if (cleanLine.endsWith(";")) {
                 cleanLine = cleanLine.substring(0, cleanLine.length() - 1).trim();
             }
 
+            // Parse the line into components (Type, Name, Value)
             var matcher = declarationPattern.matcher(cleanLine);
 
             if (!matcher.matches()) continue;
@@ -119,8 +121,41 @@ public class SemanticAnalyzer {
         return new Result(true, "Semantic Analysis Passed!", variables, new ArrayList<>());
     }
 
+    // === TYPE VALIDATION LOGIC ===
     private boolean isValidValueForType(String type, String value) {
+        // Basic Regex Check (Format check)
         Pattern pattern = typeChecks.get(type);
-        return pattern != null && pattern.matcher(value).matches();
+        if (pattern == null || !pattern.matcher(value).matches()) {
+            return false;
+        }
+
+        // Range Check (Logic check)
+        // e.g., 1000 is a valid integer format, but too big for a byte (-128 to 127)
+        try {
+            switch (type) {
+                case "byte":
+                    if (value.matches("-?\\d+")) {
+                        long val = Long.parseLong(value);
+                        return val >= -128 && val <= 127;
+                    }
+                    break;
+                case "short":
+                    if (value.matches("-?\\d+")) {
+                        long val = Long.parseLong(value);
+                        return val >= -32768 && val <= 32767;
+                    }
+                    break;
+                case "int":
+                    if (value.matches("-?\\d+")) {
+                        long val = Long.parseLong(value);
+                        return val >= -2147483648L && val <= 2147483647L;
+                    }
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            return false; // Number is too big for Java to even parse (Overflow)
+        }
+
+        return true;
     }
 }
