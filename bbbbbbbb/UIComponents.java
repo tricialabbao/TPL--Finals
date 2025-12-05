@@ -197,7 +197,7 @@ public class UIComponents {
         return zone;
     }
     
-    private void updateUploadZoneStyle(VBox zone, boolean hover) {
+    public void updateUploadZoneStyle(VBox zone, boolean hover) {
         String borderColor = hover ? "#8b5cf6" : "rgba(100,116,139,0.4)";
         String bgColor = hover ? "rgba(139,92,246,0.12)" : "rgba(30,41,59,0.3)";
         String shadow = hover ? "-fx-effect: dropshadow(gaussian, rgba(139,92,246,0.4), 16, 0, 0, 0);" : 
@@ -646,4 +646,5 @@ public class UIComponents {
     public VBox getSyntaxStage() { return syntaxStage; }
     public VBox getSemanticStage() { return semanticStage; }
     public Button getClearButton() { return clearBtn; }
+
 }
