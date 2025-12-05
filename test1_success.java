@@ -1,0 +1,9 @@
+int age = 25;
+double salary = 75000.50;
+String name = "Bean Sooker";
+boolean isActive = true;
+char grade = 'A';
+byte level = 10;
+short population = 30000;
+long distance = 1234567890L;
+float temperature = 98.6f;
