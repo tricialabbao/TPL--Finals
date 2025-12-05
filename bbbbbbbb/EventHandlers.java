@@ -30,6 +30,42 @@ public class EventHandlers {
     // Link UI actions/clicks to Java methods
     public void setupAllHandlers() {
         uiComponents.getUploadZone().setOnMouseClicked(e -> handleFileUpload());
+
+        // This changes the cursor to show copy is allowed
+        uiComponents.getUploadZone().setOnDragOver(event -> {
+            if (event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY);
+            }
+            event.consume();
+        });
+        // drag entered fileuploadzone
+        uiComponents.getUploadZone().setOnDragEntered(event -> {
+            if (event.getDragboard().hasFiles()) {
+                uiComponents.updateUploadZoneStyle(uiComponents.getUploadZone(), true);
+                uiComponents.getUploadZone().setScaleX(1.05);
+                uiComponents.getUploadZone().setScaleY(1.05);
+            }
+        });
+
+        // 4. drag exited fileuploadzone
+        uiComponents.getUploadZone().setOnDragExited(event -> {
+            uiComponents.updateUploadZoneStyle(uiComponents.getUploadZone(), false);
+            uiComponents.getUploadZone().setScaleX(1.0);
+            uiComponents.getUploadZone().setScaleY(1.0);
+        });
+        // grabs the file
+        uiComponents.getUploadZone().setOnDragDropped(event -> {
+            var db = event.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                File file = db.getFiles().get(0);
+                loadFile(file);
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+
         uiComponents.getLexicalStage().setOnMouseClicked(e -> handleLexicalAnalysis());
         uiComponents.getSyntaxStage().setOnMouseClicked(e -> handleSyntaxAnalysis());
         uiComponents.getSemanticStage().setOnMouseClicked(e -> handleSemanticAnalysis());
@@ -44,6 +80,21 @@ public class EventHandlers {
         );
         
         File file = fileChooser.showOpenDialog(primaryStage);
+        loadFile(file);
+        if (file != null) {
+            try {
+                String content = Files.readString(file.toPath());
+                uiComponents.getCodeArea().setText(content);
+                appState.setFileLoaded(true);
+                uiComponents.setResultText("File loaded successfully!\n\nClick \"Lexical Analysis\" to begin.", false);
+                uiComponents.updateButtonStates(appState);
+            } catch (Exception e) {
+                uiComponents.setResultText("ERROR: Failed to read file!", true);
+            }
+        }
+    }
+
+    private void loadFile(File file) {
         if (file != null) {
             try {
                 String content = Files.readString(file.toPath());
