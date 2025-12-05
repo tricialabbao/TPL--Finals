@@ -61,7 +61,7 @@ public class LexicalAnalyzer {
             //Delimiters (= or ;)
             "|([=;])" +
             // Numbers (Integers, Decimals, with f/L suffixes)
-            "|(-?\\d+(?:\\.\\d+)?[fFdDlL])?" +
+            "|(-?\\d+(?:\\.\\d+)?[fFdDlL]?)" +
             //Identifiers (Variable names or Keywords)
             "|([a-zA-Z_][a-zA-Z0-9_]*)" +
             //Matches any non-whitespace character (\S) that wasn't caught above
@@ -123,4 +123,5 @@ public class LexicalAnalyzer {
         }
         return null;
     }
+
 }
